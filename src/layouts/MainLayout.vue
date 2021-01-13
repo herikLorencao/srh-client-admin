@@ -1,21 +1,38 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
-        />
+      <q-toolbar class="flex justify-between">
+        <div>
+          <q-btn
+            flat
+            dense
+            round
+            icon="fas fa-bars"
+            aria-label="Menu"
+            @click="leftDrawerOpen = !leftDrawerOpen"
+          />
 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
+          <q-btn
+            flat
+            dense
+            round
+            icon="fas fa-home"
+            aria-label="Home"
+          />
+        </div>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div class="flex">
+          <q-toolbar-title>
+            Admin
+          </q-toolbar-title>
+          <q-btn
+            flat
+            dense
+            round
+            icon="fas fa-user"
+            aria-label="User"
+          />
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -25,13 +42,8 @@
       bordered
       content-class="bg-grey-1"
     >
-      <q-list>
-        <q-item-label
-          header
-          class="text-grey-8"
-        >
-          Essential Links
-        </q-item-label>
+      <q-list class="flex column">
+        <q-img class="logo-main-image self-center" src="../assets/primaryLogo.png" />
         <EssentialLink
           v-for="link in essentialLinks"
           :key="link.title"
@@ -43,6 +55,14 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <q-footer :elevated="false" class="application-footer">
+      <q-toolbar>
+        <q-toolbar-title class="flex justify-center footer-text">
+          Desenvolvido por Herik dos S. Lorenção
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-footer>
   </q-layout>
 </template>
 

@@ -1,1 +1,17 @@
-// app global css in SCSS form
+@import 'quasar.variables';
+@import 'pages/login';
+
+.footer-text {
+  font-size: 1rem;
+}
+
+.application-footer {
+  background-color: white;
+  color: $dark;
+}
+
+.logo-main-image {
+  width: 70%;
+  margin: 20px 0;
+}
+
