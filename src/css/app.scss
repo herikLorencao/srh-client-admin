@@ -11,7 +11,55 @@
 }
 
 .logo-main-image {
-  width: 70%;
-  margin: 20px 0;
+  width: 60%;
+  margin: 40px 0;
 }
 
+.menu-icon {
+  font-size: 1.8rem;
+  max-width: 30px;
+  margin-right: 20px;
+  color: $secondary;
+}
+
+.item-menu{
+  display: flex;
+  width: 100%;
+  margin-left: 30px;
+  font-size: 1.3rem;
+  color: $dark;
+}
+
+.item-menu-list:hover {
+  background-color: $dark;
+
+  .item-menu {
+    color: white;
+  }
+}
+
+.menu-icon {
+  font-size: 1.8rem;
+  max-width: 30px;
+  margin-right: 20px;
+  color: $secondary;
+}
+
+.subitem-menu-list {
+  padding-left: 30px;
+  display: flex;
+  width: 100%;
+  color: $dark;
+}
+
+.subitem-menu-list:hover {
+  background-color: $secondaryLight;
+
+  .menu-icon {
+    color: white;
+  }
+
+  .item-menu {
+    color: white;
+  }
+}

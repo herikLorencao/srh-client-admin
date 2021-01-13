@@ -44,10 +44,10 @@
     >
       <q-list class="flex column">
         <q-img class="logo-main-image self-center" src="../assets/primaryLogo.png" />
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
+
+        <ItemMenu v-for="linkData in links" :key="linkData.link" :link="linkData.link"
+                  :icon="linkData.icon" :label="linkData.label" :parent="linkData.parent"
+                  :route-selected="routeSelected"
         />
       </q-list>
     </q-drawer>
@@ -67,60 +67,79 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink.vue';
+import ItemMenu from 'components/ItemMenu/ItemMenu';
 
 const linksData = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev',
+    link: '/projetos',
+    icon: 'fas fa-home',
+    label: 'Projetos',
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework',
+    link: '/projetos/usuarios',
+    icon: 'fas fa-user',
+    label: 'Usuários',
+    parent: 'projetos',
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev',
+    link: '/projetos/recomendacoes',
+    icon: 'fas fa-user',
+    label: 'Recomendações',
+    parent: 'projetos',
   },
   {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev',
+    link: '/projetos/avaliacoes',
+    icon: 'fas fa-user',
+    label: 'Avaliações',
+    parent: 'projetos',
   },
   {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev',
+    link: '/projetos/tags',
+    icon: 'fas fa-user',
+    label: 'Tags',
+    parent: 'projetos',
   },
   {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev',
+    link: '/projetos/tipoitens',
+    icon: 'fas fa-user',
+    label: 'Tipos de item',
+    parent: 'projetos',
   },
   {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev',
+    link: '/projetos/itens',
+    icon: 'fas fa-user',
+    label: 'Itens',
+    parent: 'projetos',
+  },
+  {
+    link: '/tags',
+    icon: 'fas fa-home',
+    label: 'Tags',
+  },
+  {
+    link: '/tipoitens',
+    icon: 'fas fa-home',
+    label: 'Tipos de item',
+  },
+  {
+    link: '/api',
+    icon: 'fas fa-home',
+    label: 'APIs',
   },
 ];
 
 export default {
   name: 'MainLayout',
-  components: { EssentialLink },
+  components: { ItemMenu },
+  computed: {
+    routeSelected() {
+      return this.$route.path;
+    },
+  },
   data() {
     return {
       leftDrawerOpen: false,
-      essentialLinks: linksData,
+      links: linksData,
     };
   },
 };
