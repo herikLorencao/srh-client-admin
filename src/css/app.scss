@@ -10,56 +10,67 @@
   color: $dark;
 }
 
-.logo-main-image {
-  width: 60%;
+.logo-image-painel {
   margin: 40px 0;
 }
 
-.menu-icon {
-  font-size: 1.8rem;
-  max-width: 30px;
-  margin-right: 20px;
-  color: $secondary;
+.logo-main-image {
+  width: 60%;
 }
 
-.item-menu{
-  display: flex;
+.itemmenu-item {
+  padding: 0;
+
+  .icon {
+    color: $secondary;
+  }
+
+  span {
+    color: $dark;
+  }
+}
+
+.itemmenu-section {
   width: 100%;
-  margin-left: 30px;
-  font-size: 1.3rem;
-  color: $dark;
+  cursor: pointer;
+  padding-left: 30px;
+
+  .icon {
+    width: 20%;
+    font-size: 1.2rem;
+  }
 }
 
-.item-menu-list:hover {
+.subitem {
+  padding-left: 20px;
+}
+
+.item:hover {
   background-color: $dark;
 
-  .item-menu {
+  span {
     color: white;
   }
 }
 
-.menu-icon {
-  font-size: 1.8rem;
-  max-width: 30px;
+.subitem:hover {
+  background-color: $secondary;
+
+  .icon {
+    color: white;
+  }
+
+  span {
+    color: white;
+  }
+}
+
+.menu-button {
   margin-right: 20px;
-  color: $secondary;
 }
 
-.subitem-menu-list {
-  padding-left: 30px;
-  display: flex;
-  width: 100%;
-  color: $dark;
-}
-
-.subitem-menu-list:hover {
-  background-color: $secondaryLight;
-
-  .menu-icon {
-    color: white;
-  }
-
-  .item-menu {
-    color: white;
+.user-info {
+  .user-info-action {
+    padding: 0 10px;
   }
 }

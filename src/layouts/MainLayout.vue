@@ -9,6 +9,7 @@
             round
             icon="fas fa-bars"
             aria-label="Menu"
+            class="menu-button"
             @click="leftDrawerOpen = !leftDrawerOpen"
           />
 
@@ -18,21 +19,15 @@
             round
             icon="fas fa-home"
             aria-label="Home"
+            @click="goToHome"
           />
         </div>
 
-        <div class="flex">
-          <q-toolbar-title>
-            Admin
-          </q-toolbar-title>
-          <q-btn
-            flat
-            dense
-            round
-            icon="fas fa-user"
-            aria-label="User"
-          />
-        </div>
+        <q-fab flat square class="user-info" icon="fas fa-user" label="Admin" direction="down"
+               v-model="userMenuActive">
+          <q-fab-action square class="user-info-action" color="blue-grey-10"
+                        icon="fas fa-sign-out-alt" label="Sair"/>
+        </q-fab>
       </q-toolbar>
     </q-header>
 
@@ -42,18 +37,21 @@
       bordered
       content-class="bg-grey-1"
     >
-      <q-list class="flex column">
-        <q-img class="logo-main-image self-center" src="../assets/primaryLogo.png" />
+      <div class="flex justify-center logo-image-painel">
+        <q-img class="logo-main-image" src="../assets/primaryLogo.png"/>
+      </div>
 
-        <ItemMenu v-for="linkData in links" :key="linkData.link" :link="linkData.link"
-                  :icon="linkData.icon" :label="linkData.label" :parent="linkData.parent"
-                  :route-selected="routeSelected"
-        />
+      <q-list>
+        <ItemMenu v-for="(link, i) in links" :key="i" :label="link.label"
+                  :icon="link.icon" :link="link.link" :parent="link.parent"
+                  :activateMenuParent="activateParentItemMenu"
+                  @clickItem="navigateInMenu"
+        ></ItemMenu>
       </q-list>
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view/>
     </q-page-container>
 
     <q-footer :elevated="false" class="application-footer">
@@ -67,63 +65,63 @@
 </template>
 
 <script>
-import ItemMenu from 'components/ItemMenu/ItemMenu';
+import ItemMenu from 'components/ItemMenu';
 
 const linksData = [
   {
     link: '/projetos',
-    icon: 'fas fa-home',
+    icon: 'fas fa-paperclip',
     label: 'Projetos',
   },
   {
     link: '/projetos/usuarios',
     icon: 'fas fa-user',
     label: 'Usuários',
-    parent: 'projetos',
+    parent: 'Projetos',
   },
   {
     link: '/projetos/recomendacoes',
-    icon: 'fas fa-user',
+    icon: 'fas fa-lightbulb',
     label: 'Recomendações',
-    parent: 'projetos',
+    parent: 'Projetos',
   },
   {
     link: '/projetos/avaliacoes',
-    icon: 'fas fa-user',
+    icon: 'fas fa-edit',
     label: 'Avaliações',
-    parent: 'projetos',
+    parent: 'Projetos',
   },
   {
     link: '/projetos/tags',
-    icon: 'fas fa-user',
+    icon: 'fas fa-tags',
     label: 'Tags',
-    parent: 'projetos',
+    parent: 'Projetos',
   },
   {
     link: '/projetos/tipoitens',
-    icon: 'fas fa-user',
+    icon: 'fas fa-boxes',
     label: 'Tipos de item',
-    parent: 'projetos',
+    parent: 'Projetos',
   },
   {
     link: '/projetos/itens',
-    icon: 'fas fa-user',
+    icon: 'fas fa-box',
     label: 'Itens',
-    parent: 'projetos',
+    parent: 'Projetos',
   },
   {
     link: '/tags',
-    icon: 'fas fa-home',
+    icon: 'fas fa-tags',
     label: 'Tags',
   },
   {
     link: '/tipoitens',
-    icon: 'fas fa-home',
+    icon: 'fas fa-boxes',
     label: 'Tipos de item',
   },
   {
     link: '/api',
-    icon: 'fas fa-home',
+    icon: 'fas fa-cog',
     label: 'APIs',
   },
 ];
@@ -131,16 +129,41 @@ const linksData = [
 export default {
   name: 'MainLayout',
   components: { ItemMenu },
-  computed: {
-    routeSelected() {
-      return this.$route.path;
-    },
-  },
   data() {
     return {
+      userMenuActive: false,
       leftDrawerOpen: false,
       links: linksData,
+      parentItemMenusLabels: ['Projetos'],
+      activateParentItemMenu: null,
     };
+  },
+  methods: {
+    navigateInMenu(menuInfo) {
+      if (this.activateParentItemMenu === menuInfo.label) {
+        this.activateParentItemMenu = null;
+        return;
+      }
+
+      const findParentItemMenu = this.parentItemMenusLabels.filter(
+        (item) => item === menuInfo.label,
+      );
+
+      if (findParentItemMenu.length > 0) {
+        const [parentValue] = findParentItemMenu;
+        this.activateParentItemMenu = parentValue;
+      } else {
+        this.activateParentItemMenu = menuInfo.parent;
+      }
+
+      this.$router.push(menuInfo.link);
+    },
+    toggleUserMenu() {
+      this.userMenuActive = !this.userMenuActive;
+    },
+    goToHome() {
+      this.$router.push('/');
+    },
   },
 };
 </script>
