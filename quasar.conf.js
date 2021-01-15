@@ -65,6 +65,13 @@ module.exports = function (/* ctx */) {
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
 
+      env: {
+        API_URL: 'http://localhost:8080',
+        JWT_SIGNATURE: 'VGFrZSBPbiBNZSBUYWtlIE1lIE9u',
+        API_USER: 'admin',
+        API_PASSWORD: '123456',
+      },
+
       // https://quasar.dev/quasar-cli/handling-webpack
       extendWebpack(cfg) {
         cfg.module.rules.push({
@@ -121,7 +128,7 @@ module.exports = function (/* ctx */) {
       manifest: {
         name: 'SRH Admin',
         short_name: 'SRH Admin',
-        description: 'A Admin client for SRH',
+        description: 'A Admin api for SRH',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
@@ -186,7 +193,7 @@ module.exports = function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'srh-client-admin',
+        appId: 'srh-api-admin',
       },
 
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration

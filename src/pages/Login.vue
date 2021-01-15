@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import LoginService from 'src/service/LoginService';
+
 export default {
   name: 'Login',
   data() {
@@ -34,7 +36,14 @@ export default {
     };
   },
   methods: {
-    submitLogin() {
+    async submitLogin() {
+      const loginService = new LoginService();
+      const userInfo = await loginService.login(this.loginForm);
+
+      if (userInfo.userId) {
+        await this.$store.dispatch('user/saveUserId', userInfo.userId);
+        await this.$router.push('/');
+      }
     },
   },
 };

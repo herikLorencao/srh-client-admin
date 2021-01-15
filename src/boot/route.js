@@ -11,11 +11,14 @@ export default async ({ router, store, Vue }) => {
     const sessionToken = Vue.$cookies.get('sessionToken');
 
     try {
-      jwt.verify(sessionToken, Buffer.from('VGFrZSBPbiBNZSBUYWtlIE1lIE9u', 'base64'), { algorithms: ['HS256'] });
-      next();
+      jwt.verify(sessionToken, Buffer.from(process.env.JWT_SIGNATURE, 'base64'), { algorithms: ['HS256'] });
     } catch (e) {
-      console.log(e);
       next('/login');
     }
+
+    const userInfo = store.getters['user/getUserInfo'];
+    if (!userInfo.id) next('/login');
+
+    next();
   });
 };
