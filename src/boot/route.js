@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+
 // eslint-disable-next-line no-unused-vars
 export default async ({ router, store, Vue }) => {
   router.beforeEach((to, from, next) => {
@@ -6,15 +8,14 @@ export default async ({ router, store, Vue }) => {
       return;
     }
 
-    Vue.$cookies.set('sessionToken', '');
+    const sessionToken = Vue.$cookies.get('sessionToken');
 
-    const validToken = false;
-
-    if (validToken) {
+    try {
+      jwt.verify(sessionToken, Buffer.from('VGFrZSBPbiBNZSBUYWtlIE1lIE9u', 'base64'), { algorithms: ['HS256'] });
       next();
-      return;
+    } catch (e) {
+      console.log(e);
+      next('/login');
     }
-
-    next('/login');
   });
 };
