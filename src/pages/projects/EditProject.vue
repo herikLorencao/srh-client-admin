@@ -50,7 +50,7 @@ export default {
       form.situation = this.projectForm.situation === 'Aberto' ? 'OPEN' : 'CLOSED';
 
       await projectService.update(form);
-      await this.loadProject();
+      await this.$router.push('/projetos/listar');
     },
     async loadProject() {
       const projectService = new ProjectService();

@@ -17,10 +17,18 @@ const routes = [
     path: '/projetos',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/projetos/Projects.vue') },
-      { path: 'criar', component: () => import('pages/projetos/CreateProject') },
-      { path: 'editar/:id', component: () => import('pages/projetos/EditProject') },
-      { path: 'listar', component: () => import('pages/projetos/ListProjects') },
+      { path: '', component: () => import('pages/projects/Projects') },
+      { path: 'criar', component: () => import('pages/projects/CreateProject') },
+      { path: 'editar/:id', component: () => import('pages/projects/EditProject') },
+      { path: 'listar', component: () => import('pages/projects/ListProjects') },
+      { path: 'selecionar', component: () => import('pages/projects/SelectProject') },
+    ],
+  },
+  {
+    path: '/projetos/usuarios',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/users/ListUsers') },
     ],
   },
   {

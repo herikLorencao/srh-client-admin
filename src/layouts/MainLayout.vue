@@ -75,6 +75,12 @@ const linksData = [
     label: 'Projetos',
   },
   {
+    link: '/projetos/selecionar',
+    icon: 'fas fa-exchange-alt',
+    label: 'Selecionar Projeto',
+    parent: 'Projetos',
+  },
+  {
     link: '/projetos/usuarios',
     icon: 'fas fa-user',
     label: 'Usuários',
