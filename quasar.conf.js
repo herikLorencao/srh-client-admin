@@ -94,7 +94,11 @@ module.exports = function (/* ctx */) {
     framework: {
       iconSet: 'fontawesome-v5', // Quasar icon set
       lang: 'pt-br', // Quasar language pack
-      config: {},
+      config: {
+        notify: {
+          position: 'bottom-right',
+        },
+      },
 
       // Possible values for "importStrategy":
       // * 'auto' - (DEFAULT) Auto-import needed Quasar components & directives
@@ -109,7 +113,9 @@ module.exports = function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: [],
+      plugins: [
+        'Notify',
+      ],
     },
 
     // animations: 'all', // --- includes all animations

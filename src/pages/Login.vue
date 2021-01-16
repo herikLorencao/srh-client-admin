@@ -27,6 +27,7 @@
 
 <script>
 import LoginService from 'src/service/LoginService';
+import notify from '../helper/notify';
 
 export default {
   name: 'Login',
@@ -41,6 +42,7 @@ export default {
       const userInfo = await loginService.login(this.loginForm);
 
       if (userInfo && userInfo.userId) {
+        notify('positive', 'Login realizado com sucesso');
         await this.$store.dispatch('user/saveUserId', userInfo.userId);
         await this.$router.push('/');
       }

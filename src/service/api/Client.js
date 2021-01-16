@@ -1,6 +1,7 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import Vue from 'vue';
+import handleErrorResponse from 'src/utils/handleErrorResponse';
 import AuthService from '../AuthService';
 
 export default class Client {
@@ -31,7 +32,7 @@ export default class Client {
       const resp = await this.client.post(url, resource);
       return resp.data;
     } catch (e) {
-      // console.log('Não consegue');
+      handleErrorResponse(e.response.data);
       return null;
     }
   }
