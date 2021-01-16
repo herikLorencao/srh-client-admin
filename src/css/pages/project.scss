@@ -1,3 +1,7 @@
+h1 {
+  margin-top: 30px;
+}
+
 .project-actions {
   display: flex;
   justify-content: space-around;
@@ -18,5 +22,28 @@
 
   span {
     font-size: 1.5rem;
+  }
+}
+
+.project-action-button:hover {
+  .icon {
+    color: $secondaryLight;
+  }
+}
+
+.form {
+  margin-top: 20px;
+  width: 50%;
+
+  .input {
+    width: 100%;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+
+  .btn {
+    background-color: $primary;
+    width: 30%;
+    margin-top: 30px;
   }
 }

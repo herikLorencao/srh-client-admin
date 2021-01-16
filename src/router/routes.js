@@ -17,7 +17,8 @@ const routes = [
     path: '/projetos',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/projetos/Projetos.vue') },
+      { path: '', component: () => import('pages/projetos/Projects.vue') },
+      { path: 'criar', component: () => import('pages/projetos/CreateProject') },
     ],
   },
   {
