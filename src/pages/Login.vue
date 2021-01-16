@@ -43,7 +43,7 @@ export default {
 
       if (userInfo && userInfo.userId) {
         notify('positive', 'Login realizado com sucesso');
-        await this.$store.dispatch('user/saveUserId', userInfo.userId);
+        await this.$store.commit('user/saveUserId', userInfo.userId);
         await this.$router.push('/');
       }
     },

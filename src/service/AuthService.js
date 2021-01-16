@@ -19,4 +19,9 @@ export default class AuthService {
       // console.log('Mensagem');
     }
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  removeApiToken() {
+    Vue.$cookies.remove('sessionToken');
+  }
 }

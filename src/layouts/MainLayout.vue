@@ -25,7 +25,7 @@
 
         <q-fab flat square class="user-info" icon="fas fa-user" label="Admin" direction="down"
                v-model="userMenuActive">
-          <q-fab-action square class="user-info-action" color="blue-grey-10"
+          <q-fab-action @click="logout" square class="user-info-action" color="blue-grey-10"
                         icon="fas fa-sign-out-alt" label="Sair"/>
         </q-fab>
       </q-toolbar>
@@ -66,6 +66,7 @@
 
 <script>
 import ItemMenu from 'components/ItemMenu';
+import AuthService from 'src/service/AuthService';
 
 const linksData = [
   {
@@ -158,11 +159,14 @@ export default {
 
       this.$router.push(menuInfo.link);
     },
-    toggleUserMenu() {
-      this.userMenuActive = !this.userMenuActive;
-    },
     goToHome() {
       this.$router.push('/');
+    },
+    logout() {
+      const authService = new AuthService();
+      authService.removeApiToken();
+      this.$store.commit('user/removeUserId');
+      this.$router.push('/login');
     },
   },
 };

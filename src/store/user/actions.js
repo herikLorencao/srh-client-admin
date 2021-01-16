@@ -1,3 +1,3 @@
-export async function saveUserId({ commit }, data) {
-  commit('saveUserId', data);
-}
+// export async function saveUserId({ commit }, data) {
+//   commit('saveUserId', data);
+// }
