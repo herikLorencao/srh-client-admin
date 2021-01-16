@@ -27,13 +27,42 @@ export default class Client {
     });
   }
 
-  async post(url, resource) {
+  async get(resourceUrl, id) {
     try {
-      const resp = await this.client.post(url, resource);
+      const resp = await this.client.get(`${resourceUrl}/${id}`);
       return resp.data;
     } catch (e) {
       handleErrorResponse(e.response.data);
       return null;
     }
   }
+
+  async post(resourceUrl, resource) {
+    try {
+      const resp = await this.client.post(resourceUrl, resource);
+      return resp.data;
+    } catch (e) {
+      handleErrorResponse(e.response.data);
+      return null;
+    }
+  }
+
+  async put(resourceUrl, id, resource) {
+    try {
+      const resp = await this.client.put(`${resourceUrl}/${id}`, resource);
+      return resp.data;
+    } catch (e) {
+      handleErrorResponse(e.response.data);
+      return null;
+    }
+  }
+  //
+  // async delete(resourceUrl, id) {
+  //   try {
+  //     const resp = await this.client.delete(`${resourceUrl}/${id}`);
+  //     return resp.data;
+  //   } catch (e) {
+  //     handleErrorResponse(e.response.data);
+  //     return null;
+  //   }
 }

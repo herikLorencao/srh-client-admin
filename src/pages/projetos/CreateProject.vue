@@ -35,7 +35,8 @@ export default {
   methods: {
     async submitCreateProject() {
       const projectService = new ProjectService();
-      await projectService.create(this.projectForm);
+      const resp = await projectService.create(this.projectForm);
+      if (resp) this.$router.push(`/projetos/editar/${resp.id}`);
     },
   },
 };
