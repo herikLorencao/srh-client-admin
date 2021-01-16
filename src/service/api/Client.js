@@ -12,7 +12,7 @@ export default class Client {
       },
     });
 
-    this.client.interceptors.request.use((config) => {
+    this.client.interceptors.request.use(async (config) => {
       try {
         const sessionToken = Vue.$cookies.get('sessionToken');
         jwt.verify(sessionToken, Buffer.from(process.env.JWT_SIGNATURE, 'base64'), { algorithms: ['HS256'] });
@@ -20,7 +20,8 @@ export default class Client {
         return config;
       } catch (e) {
         const authService = new AuthService();
-        return authService.generateApiToken();
+        await authService.generateApiToken();
+        return config;
       }
     });
   }

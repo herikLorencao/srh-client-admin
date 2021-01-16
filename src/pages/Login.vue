@@ -40,7 +40,7 @@ export default {
       const loginService = new LoginService();
       const userInfo = await loginService.login(this.loginForm);
 
-      if (userInfo.userId) {
+      if (userInfo && userInfo.userId) {
         await this.$store.dispatch('user/saveUserId', userInfo.userId);
         await this.$router.push('/');
       }
