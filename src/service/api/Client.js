@@ -27,6 +27,16 @@ export default class Client {
     });
   }
 
+  async getAll(resourceUrl) {
+    try {
+      const resp = await this.client.get(resourceUrl);
+      return resp.data;
+    } catch (e) {
+      handleErrorResponse(e.response.data);
+      return null;
+    }
+  }
+
   async get(resourceUrl, id) {
     try {
       const resp = await this.client.get(`${resourceUrl}/${id}`);
@@ -56,13 +66,14 @@ export default class Client {
       return null;
     }
   }
-  //
-  // async delete(resourceUrl, id) {
-  //   try {
-  //     const resp = await this.client.delete(`${resourceUrl}/${id}`);
-  //     return resp.data;
-  //   } catch (e) {
-  //     handleErrorResponse(e.response.data);
-  //     return null;
-  //   }
+
+  async delete(resourceUrl, id) {
+    try {
+      await this.client.delete(`${resourceUrl}/${id}`);
+      return true;
+    } catch (e) {
+      handleErrorResponse(e.response.data);
+      return null;
+    }
+  }
 }

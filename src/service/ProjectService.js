@@ -7,6 +7,10 @@ export default class ProjectService {
     this.resourceUrl = '/projects';
   }
 
+  async list() {
+    return this.client.getAll(this.resourceUrl);
+  }
+
   async find(id) {
     return this.client.get(this.resourceUrl, id);
   }
@@ -27,5 +31,10 @@ export default class ProjectService {
     if (resp) {
       notify('positive', 'Projeto editado com sucesso');
     }
+  }
+
+  async remove(id) {
+    const resp = await this.client.delete(this.resourceUrl, id);
+    if (resp) notify('positive', 'Projeto removido com sucesso');
   }
 }

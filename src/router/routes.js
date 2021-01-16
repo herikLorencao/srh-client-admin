@@ -20,6 +20,7 @@ const routes = [
       { path: '', component: () => import('pages/projetos/Projects.vue') },
       { path: 'criar', component: () => import('pages/projetos/CreateProject') },
       { path: 'editar/:id', component: () => import('pages/projetos/EditProject') },
+      { path: 'listar', component: () => import('pages/projetos/ListProjects') },
     ],
   },
   {
