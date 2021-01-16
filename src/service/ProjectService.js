@@ -26,7 +26,7 @@ export default class ProjectService {
   }
 
   async update(projectForm) {
-    const resp = await this.client.put(this.resourceUrl, projectForm.id);
+    const resp = await this.client.put(this.resourceUrl, projectForm.id, projectForm);
 
     if (resp) {
       notify('positive', 'Projeto editado com sucesso');

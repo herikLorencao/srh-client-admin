@@ -10,6 +10,10 @@ const translateFields = (field) => {
       return 'nome';
     case 'description':
       return 'descrição';
+    case 'situation':
+      return 'situação';
+    case 'visible':
+      return 'visibilidade';
     default:
       return 'indefinido';
   }

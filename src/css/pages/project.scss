@@ -41,10 +41,27 @@ h1 {
     margin-bottom: 20px;
   }
 
+  .visible-input {
+    font-size: 1rem;
+  }
+
+  .situation-input {
+    font-size: 1rem;
+
+    span {
+      margin-bottom: 10px;
+    }
+  }
+
   .btn {
     background-color: $primary;
     width: 30%;
     margin-top: 30px;
+  }
+
+  .edit-btn {
+    margin-top: 0px;
+    margin-bottom: 50px;
   }
 }
 
