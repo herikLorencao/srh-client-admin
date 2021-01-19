@@ -9,8 +9,20 @@
       <q-btn @click="openRatingsUser" class="btn" text-color="white" label="Visualizar Avaliações"/>
       <q-btn @click="openRecommendations" class="btn" text-color="white"
              label="Visualizar Recomendações"/>
-      <q-btn class="btn" text-color="white" label="Remover do Projeto"/>
+      <q-btn @click="toggleDeleteDialog" class="btn" text-color="white" label="Remover do Projeto"/>
     </div>
+
+    <q-dialog v-model="deleteDialogVisible" persistent>
+      <q-card class="delete-dialog-card">
+        <q-card-section class="row items-center text-dialog">
+          Tem certeza que deseja remover o usuário do projeto?
+        </q-card-section>
+        <q-card-actions class="btn-actions" align="center">
+          <q-btn @click="toggleDeleteDialog" class="btn" text-color="white" label="Cancelar"/>
+          <q-btn @click="deleteUserInProject" class="btn" text-color="white" label="Confirmar"/>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -62,6 +74,7 @@ export default {
       columns,
       userSelect: [],
       users: [],
+      deleteDialogVisible: false,
     };
   },
   methods: {
@@ -79,6 +92,17 @@ export default {
     openRecommendations() {
       const userId = this.userSelect[0].id;
       this.$router.push(`/projetos/usuarios/${userId}/recomendacoes`);
+    },
+    toggleDeleteDialog() {
+      this.deleteDialogVisible = !this.deleteDialogVisible;
+    },
+    async deleteUserInProject() {
+      const projectService = new ProjectService();
+      const projectId = this.$store.getters['navigationInfo/getProjectId'];
+      const userId = this.userSelect[0].id;
+      await projectService.removeEvaluatorInProject(projectId, userId);
+      this.toggleDeleteDialog();
+      await this.loadUsers();
     },
   },
   async mounted() {

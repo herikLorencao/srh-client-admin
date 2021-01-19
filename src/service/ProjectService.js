@@ -41,4 +41,10 @@ export default class ProjectService {
   async listEvaluators(projectId) {
     return this.client.getAll(`${this.resourceUrl}/${projectId}/evaluators`);
   }
+
+  async removeEvaluatorInProject(projectId, evaluatorId) {
+    const resp = await this.client
+      .delete(`${this.resourceUrl}/${projectId}/evaluators`, evaluatorId);
+    if (resp) notify('positive', 'Usuário removido do projeto com sucesso');
+  }
 }
