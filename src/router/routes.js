@@ -30,6 +30,7 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/users/ListUsers') },
       { path: ':id/avaliacoes', component: () => import('pages/users/ItensRatingUser') },
+      { path: ':id/recomendacoes', component: () => import('pages/users/RecommendationUser') },
     ],
   },
   {

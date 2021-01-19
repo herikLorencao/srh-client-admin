@@ -7,7 +7,8 @@
 
     <div v-show="showActions" class="project-actions-list">
       <q-btn @click="openRatingsUser" class="btn" text-color="white" label="Visualizar Avaliações"/>
-      <q-btn class="btn" text-color="white" label="Visualizar Recomendações"/>
+      <q-btn @click="openRecommendations" class="btn" text-color="white"
+             label="Visualizar Recomendações"/>
       <q-btn class="btn" text-color="white" label="Remover do Projeto"/>
     </div>
   </q-page>
@@ -74,6 +75,10 @@ export default {
     openRatingsUser() {
       const userId = this.userSelect[0].id;
       this.$router.push(`/projetos/usuarios/${userId}/avaliacoes`);
+    },
+    openRecommendations() {
+      const userId = this.userSelect[0].id;
+      this.$router.push(`/projetos/usuarios/${userId}/recomendacoes`);
     },
   },
   async mounted() {
