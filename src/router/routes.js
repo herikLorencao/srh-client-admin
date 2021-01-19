@@ -29,6 +29,7 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/users/ListUsers') },
+      { path: ':id/avaliacoes', component: () => import('pages/users/ItensRatingUser') },
     ],
   },
   {
