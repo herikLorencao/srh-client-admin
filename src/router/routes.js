@@ -41,6 +41,20 @@ const routes = [
     ],
   },
   {
+    path: '/projetos/tags',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/tags/ListTagsInProject') },
+    ],
+  },
+  {
+    path: '/projetos/tipoitens',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/typeItems/ListTypeItemInProject') },
+    ],
+  },
+  {
     path: '*',
     component: () => import('pages/Error404.vue'),
   },

@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex column items-center">
-    <h1>Listar Avaliações</h1>
+    <h1>Avaliações</h1>
     <q-table class="table" :columns="columns" :data="ratings" row-key="itemId" flat/>
   </q-page>
 </template>
