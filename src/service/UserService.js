@@ -7,6 +7,10 @@ export default class UserService {
     this.resourceUrl = '/users/evaluators';
   }
 
+  async find(id) {
+    return this.client.get(this.resourceUrl, id);
+  }
+
   async list() {
     return this.client.getAll(this.resourceUrl);
   }
