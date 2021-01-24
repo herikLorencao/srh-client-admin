@@ -55,6 +55,13 @@ const routes = [
     ],
   },
   {
+    path: '/projetos/itens',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/items/ListItemsByProject') },
+    ],
+  },
+  {
     path: '*',
     component: () => import('pages/Error404.vue'),
   },

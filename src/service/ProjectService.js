@@ -47,4 +47,8 @@ export default class ProjectService {
       .delete(`${this.resourceUrl}/${projectId}/evaluators`, evaluatorId);
     if (resp) notify('positive', 'Usuário removido do projeto com sucesso');
   }
+
+  async listItens(projectId) {
+    return this.client.getAll(`${this.resourceUrl}/${projectId}/itens`);
+  }
 }

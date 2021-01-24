@@ -1,12 +1,12 @@
 <template>
   <q-page class="flex column items-center">
-    <h1>Tipos de Item</h1>
-    <q-table class="table" :columns="columns" :data="typeitens" row-key="id" flat/>
+    <h1>Itens</h1>
+    <q-table class="table" :columns="columns" :data="items" row-key="id" flat/>
   </q-page>
 </template>
 
 <script>
-import TypeItemService from 'src/service/TypeItemService';
+import ProjectService from 'src/service/ProjectService';
 
 const columns = [
   {
@@ -26,25 +26,25 @@ const columns = [
 ];
 
 export default {
-  name: 'ListTypeItemInProject',
+  name: 'ListItemsByProject',
   data() {
     return {
       columns,
-      typeitens: [],
+      items: [],
     };
   },
   methods: {
-    async loadTypeItens() {
-      const typeItemService = new TypeItemService();
+    async loadItems() {
+      const projectService = new ProjectService();
       const projectId = this.$store.getters['navigationInfo/getProjectId'];
-      const resp = await typeItemService.listByProject(projectId);
+      const resp = await projectService.listItens(projectId);
 
       // eslint-disable-next-line dot-notation
-      if (resp && resp['_embedded'].typeitems) this.typeitens = resp['_embedded'].typeitems;
+      if (resp && resp['_embedded'].itens) this.items = resp['_embedded'].itens;
     },
   },
   async mounted() {
-    await this.loadTypeItens();
+    await this.loadItems();
   },
 };
 </script>
