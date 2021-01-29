@@ -127,7 +127,7 @@ const linksData = [
     label: 'Tipos de item',
   },
   {
-    link: '/api',
+    link: '/apis',
     icon: 'fas fa-cog',
     label: 'APIs',
   },

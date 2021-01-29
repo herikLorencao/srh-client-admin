@@ -80,6 +80,14 @@ const routes = [
     ],
   },
   {
+    path: '/apis',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/apis/ApiList') },
+      { path: 'criar', component: () => import('pages/apis/CreateApi') },
+    ],
+  },
+  {
     path: '*',
     component: () => import('pages/Error404.vue'),
   },
