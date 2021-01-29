@@ -28,8 +28,8 @@ export default {
     },
     async submitEditTag() {
       const tagService = new TagService();
-      await tagService.update(this.tagForm);
-      await this.$router.push('/tags');
+      const resp = await tagService.update(this.tagForm);
+      if (resp) await this.$router.push('/tags');
     },
   },
   async mounted() {

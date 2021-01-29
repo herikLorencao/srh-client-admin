@@ -71,6 +71,15 @@ const routes = [
     ],
   },
   {
+    path: '/tipoitens',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/typeItems/ListTypeItems') },
+      { path: 'criar', component: () => import('pages/typeItems/CreateTypeItem') },
+      { path: 'editar/:id', component: () => import('pages/typeItems/EditTypeItem') },
+    ],
+  },
+  {
     path: '*',
     component: () => import('pages/Error404.vue'),
   },

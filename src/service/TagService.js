@@ -31,6 +31,7 @@ export default class TagService {
     if (resp) {
       notify('positive', 'Tag editada com sucesso');
     }
+    return resp;
   }
 
   async find(id) {
