@@ -1,7 +1,11 @@
 <template>
   <q-page class="flex column items-center">
     <h1>Itens</h1>
-    <q-table class="table" :columns="columns" :data="items" row-key="id" flat/>
+    <q-table class="table" :columns="columns" :data="items" row-key="id" flat
+             selection="single" :selected.sync="itemSelect"/>
+    <div class="item-actions flex justify-center">
+      <q-btn class="btn" text-color="white" label="Cadastrar"/>
+    </div>
   </q-page>
 </template>
 
@@ -27,10 +31,16 @@ const columns = [
 
 export default {
   name: 'ListItemsByProject',
+  computed: {
+    showActions() {
+      return this.itemSelect.length > 0;
+    },
+  },
   data() {
     return {
       columns,
       items: [],
+      itemSelect: [],
     };
   },
   methods: {

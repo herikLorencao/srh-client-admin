@@ -62,6 +62,15 @@ const routes = [
     ],
   },
   {
+    path: '/tags',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/tags/ListTags') },
+      { path: 'criar', component: () => import('pages/tags/CreateTag') },
+      { path: 'editar/:id', component: () => import('pages/tags/EditTag') },
+    ],
+  },
+  {
     path: '*',
     component: () => import('pages/Error404.vue'),
   },
