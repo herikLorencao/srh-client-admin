@@ -13,3 +13,40 @@
 .form {
   margin-bottom: 40px;
 }
+
+.toggle-admin {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.btn-pass {
+  width: 45%;
+  background-color: $primary;
+}
+
+.password-api-dialog-card {
+  width: 40%;
+
+  .text-dialog {
+    font-size: 2em;
+    font-weight: 300;
+    margin-top: 10px;
+  }
+
+  .password-inputs {
+    width: 90%;
+
+    .input {
+      margin-bottom: 10px;
+    }
+  }
+
+  .btn-actions {
+    margin-bottom: 20px;
+    width: 50%;
+  }
+
+  .btn {
+    background-color: $primary;
+  }
+}

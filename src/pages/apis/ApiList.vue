@@ -15,6 +15,9 @@
         <q-card-section class="row items-center text-dialog">
           Tem certeza que deseja remover o usuário de API?
         </q-card-section>
+        <q-card-section>
+          <q-input class="input" type="password" outlined v-model="verifyPassword" label="Senha"/>
+        </q-card-section>
         <q-card-actions class="btn-actions" align="center">
           <q-btn @click="toggleDeleteDialog" class="btn" text-color="white" label="Cancelar"/>
           <q-btn @click="deleteApi" class="btn" text-color="white" label="Confirmar"/>
@@ -26,6 +29,7 @@
 
 <script>
 import ApiService from 'src/service/ApiService';
+import notify from 'src/helper/notify';
 
 const columns = [
   {
@@ -56,6 +60,14 @@ const columns = [
     align: 'center',
     sortable: true,
   },
+  {
+    name: 'isAdmin',
+    field: 'isAdmin',
+    label: 'Administrativo',
+    align: 'center',
+    format: (value) => (value ? 'SIM' : 'NÃO'),
+    sortable: true,
+  },
 ];
 
 export default {
@@ -71,6 +83,7 @@ export default {
       apis: [],
       apiSelect: [],
       deleteDialogVisible: false,
+      verifyPassword: '',
     };
   },
   methods: {
@@ -94,7 +107,21 @@ export default {
     async deleteApi() {
       const apiService = new ApiService();
       const apiId = this.apiSelect[0].id;
-      await apiService.remove(apiId);
+      const apiForm = this.apiSelect[0];
+
+      if (this.verifyPassword === '') {
+        notify('negative', 'Informe usuário de API selecionado para remoção');
+        return;
+      }
+
+      apiForm.password = this.verifyPassword;
+      const validPassword = await apiService.update(apiForm);
+
+      if (validPassword) {
+        await apiService.remove(apiId);
+        this.verifyPassword = '';
+      }
+
       await this.loadApis();
       this.toggleDeleteDialog();
     },

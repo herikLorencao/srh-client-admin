@@ -11,6 +11,10 @@ export default class ApiService {
     return this.client.getAll(this.resourceUrl);
   }
 
+  async find(id) {
+    return this.client.get(this.resourceUrl, id);
+  }
+
   async create(apiForm) {
     const resp = await this.client.post(this.resourceUrl, apiForm);
 
@@ -18,6 +22,15 @@ export default class ApiService {
       notify('positive', 'Usuário de API criada com sucesso');
     }
 
+    return resp;
+  }
+
+  async update(apiForm) {
+    const resp = await this.client.put(this.resourceUrl, apiForm.id, apiForm);
+
+    if (resp) {
+      notify('positive', 'Usuário de API editado com sucesso');
+    }
     return resp;
   }
 

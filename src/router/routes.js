@@ -85,6 +85,7 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/apis/ApiList') },
       { path: 'criar', component: () => import('pages/apis/CreateApi') },
+      { path: 'editar/:id', component: () => import('pages/apis/EditApi') },
     ],
   },
   {
