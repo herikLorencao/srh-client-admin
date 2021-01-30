@@ -67,6 +67,7 @@
 <script>
 import ItemMenu from 'components/ItemMenu';
 import AuthService from 'src/service/AuthService';
+import AdminService from 'src/service/AdminService';
 
 const linksData = [
   {
@@ -175,5 +176,10 @@ export default {
       this.$router.push('/login');
     },
   },
+  async mounted() {
+    const adminService = new AdminService();
+    const adminInfo = await adminService.find(this.$store.getters['user/getUserId']);
+    this.$store.commit('')
+  }
 };
 </script>
