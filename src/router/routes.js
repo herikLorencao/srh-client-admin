@@ -14,10 +14,12 @@ const routes = [
     ],
   },
   {
-    path: '/admins/:id',
+    path: '/admins',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/admins/EditAdmin') },
+      { path: '', component: () => import('pages/admins/ListAdmins') },
+      { path: 'criar', component: () => import('pages/admins/CreateAdmin') },
+      { path: 'editar/:id', component: () => import('pages/admins/EditAdmin') },
     ],
   },
   {

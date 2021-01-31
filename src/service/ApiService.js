@@ -25,10 +25,10 @@ export default class ApiService {
     return resp;
   }
 
-  async update(apiForm) {
+  async update(apiForm, isRemovedVerify = false) {
     const resp = await this.client.put(this.resourceUrl, apiForm.id, apiForm);
 
-    if (resp) {
+    if (resp && !isRemovedVerify) {
       notify('positive', 'Usuário de API editado com sucesso');
     }
     return resp;

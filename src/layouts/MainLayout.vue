@@ -119,6 +119,11 @@ const linksData = [
     parent: 'Projetos',
   },
   {
+    link: '/admins',
+    icon: 'fas fa-user',
+    label: 'Administradores',
+  },
+  {
     link: '/tags',
     icon: 'fas fa-tags',
     label: 'Tags',
@@ -184,7 +189,7 @@ export default {
     },
     editProfile() {
       const adminId = this.$store.getters['user/getUserId'];
-      this.$router.push(`/admins/${adminId}`);
+      this.$router.push(`/admins/editar/${adminId}?profile=true`);
     },
   },
   async mounted() {

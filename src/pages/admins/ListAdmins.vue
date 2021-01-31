@@ -1,26 +1,27 @@
 <template>
   <q-page class="flex column items-center">
-    <h1>APIs</h1>
-    <q-table class="table" :columns="columns" :data="apis" row-key="id"
-             selection="single" :selected.sync="apiSelect" flat/>
+    <h1>Administradores</h1>
+    <q-table class="table" :columns="columns" :data="admins" row-key="id"
+             selection="single" :selected.sync="adminSelect" flat/>
     <div class="api-actions flex justify-center">
-      <q-btn @click="createApi" class="btn" text-color="white" label="Cadastrar"/>
-      <q-btn v-show="showActions" @click="editApi" class="btn" text-color="white"
+      <q-btn @click="createAdmin" class="btn" text-color="white" label="Cadastrar"/>
+      <q-btn v-show="showActions" @click="editAdmin" class="btn" text-color="white"
              label="Editar"/>
       <q-btn v-show="showActions" @click="toggleDeleteDialog" class="btn" text-color="white"
              label="Remover"/>
     </div>
+
     <q-dialog v-model="deleteDialogVisible" persistent>
       <q-card class="delete-dialog-card">
         <q-card-section class="row items-center text-dialog">
-          Tem certeza que deseja remover o usuário de API?
+          Tem certeza que deseja remover o administrador?
         </q-card-section>
         <q-card-section>
           <q-input class="input" type="password" outlined v-model="verifyPassword" label="Senha"/>
         </q-card-section>
         <q-card-actions class="btn-actions" align="center">
           <q-btn @click="toggleDeleteDialog" class="btn" text-color="white" label="Cancelar"/>
-          <q-btn @click="deleteApi" class="btn" text-color="white" label="Confirmar"/>
+          <q-btn @click="deleteAdmin" class="btn" text-color="white" label="Confirmar"/>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -28,7 +29,7 @@
 </template>
 
 <script>
-import ApiService from 'src/service/ApiService';
+import AdminService from 'src/service/AdminService';
 import notify from 'src/helper/notify';
 
 const columns = [
@@ -60,65 +61,57 @@ const columns = [
     align: 'center',
     sortable: true,
   },
-  {
-    name: 'isAdmin',
-    field: 'isAdmin',
-    label: 'Administrativo',
-    align: 'center',
-    format: (value) => (value ? 'SIM' : 'NÃO'),
-    sortable: true,
-  },
 ];
 
 export default {
-  name: 'ApiList',
+  name: 'ListAdmins',
   computed: {
     showActions() {
-      return this.apiSelect.length > 0;
+      return this.adminSelect.length > 0;
     },
   },
   data() {
     return {
       columns,
-      apis: [],
-      apiSelect: [],
+      admins: [],
+      adminSelect: [],
       deleteDialogVisible: false,
       verifyPassword: '',
     };
   },
   methods: {
     async loadApis() {
-      const apiService = new ApiService();
-      const resp = await apiService.list();
+      const adminService = new AdminService();
+      const resp = await adminService.list();
 
       // eslint-disable-next-line dot-notation
-      if (resp && resp['_embedded'].apiUsers) this.apis = resp['_embedded'].apiUsers;
+      if (resp && resp['_embedded'].admins) this.admins = resp['_embedded'].admins;
     },
-    async createApi() {
-      await this.$router.push('/apis/criar');
+    async createAdmin() {
+      await this.$router.push('/admins/criar');
     },
-    async editApi() {
-      const apiId = this.apiSelect[0].id;
-      await this.$router.push(`/apis/editar/${apiId}`);
+    async editAdmin() {
+      const adminId = this.adminSelect[0].id;
+      await this.$router.push(`/admins/editar/${adminId}`);
     },
     toggleDeleteDialog() {
       this.deleteDialogVisible = !this.deleteDialogVisible;
     },
-    async deleteApi() {
-      const apiService = new ApiService();
-      const apiId = this.apiSelect[0].id;
-      const apiForm = this.apiSelect[0];
+    async deleteAdmin() {
+      const adminService = new AdminService();
+      const adminId = this.adminSelect[0].id;
+      const adminForm = this.adminSelect[0];
 
       if (this.verifyPassword === '') {
-        notify('negative', 'Informe usuário de API selecionado para remoção');
+        notify('negative', 'Informe a senha do administrador selecionado para remoção');
         return;
       }
 
-      apiForm.password = this.verifyPassword;
-      const validPassword = await apiService.update(apiForm, true);
+      adminForm.password = this.verifyPassword;
+      const validPassword = await adminService.update(adminForm, true);
 
       if (validPassword) {
-        await apiService.remove(apiId);
+        await adminService.remove(adminId);
         this.verifyPassword = '';
       }
 

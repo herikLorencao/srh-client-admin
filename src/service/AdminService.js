@@ -11,13 +11,32 @@ export default class AdminService {
     return this.client.get(this.resourceUrl, id);
   }
 
-  async update(adminForm) {
-    const resp = await this.client.put(this.resourceUrl, adminForm.id, adminForm);
+  async create(apiForm) {
+    const resp = await this.client.post(this.resourceUrl, apiForm);
 
     if (resp) {
-      notify('positive', 'Perfil editado com sucesso');
+      notify('positive', 'Administrador criado com sucesso');
     }
 
     return resp;
+  }
+
+  async list() {
+    return this.client.getAll(this.resourceUrl);
+  }
+
+  async update(adminForm, isRemovedVerify = false) {
+    const resp = await this.client.put(this.resourceUrl, adminForm.id, adminForm);
+
+    if (resp && !isRemovedVerify) {
+      notify('positive', 'Administrador editado com sucesso');
+    }
+
+    return resp;
+  }
+
+  async remove(id) {
+    const resp = await this.client.delete(this.resourceUrl, id);
+    if (resp) notify('positive', 'Administrador removido com sucesso');
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex column flex-center">
-    <h1>Editar Perfil</h1>
+    <h1>Editar {{ screenTitle }}</h1>
     <q-form class="form flex column items-center" @submit="editAdminSubmit">
       <q-input class="input" outlined v-model="profileForm.name" label="Nome"/>
       <q-input class="input" outlined v-model="profileForm.login" label="Login"/>
@@ -73,11 +73,18 @@ export default {
       passwordChanged: false,
     };
   },
+  computed: {
+    adminId() {
+      return this.$route.params.id;
+    },
+    screenTitle() {
+      return this.$route.query.profile ? 'Perfil' : 'Administrador';
+    },
+  },
   methods: {
     async loadAdmin() {
       const adminService = new AdminService();
-      const adminId = this.$store.getters['user/getUserId'];
-      const resp = await adminService.find(adminId);
+      const resp = await adminService.find(this.adminId);
       if (resp) this.profileForm = resp;
     },
     async editAdminSubmit() {
@@ -93,8 +100,15 @@ export default {
       const adminService = new AdminService();
       const resp = await adminService.update(this.profileForm);
 
-      if (resp) await this.$router.push('/');
+      if (resp) await this.redirectPage();
       this.clearPassword();
+    },
+    async redirectPage() {
+      if (this.$route.query.profile) {
+        await this.$router.push('/');
+        return;
+      }
+      await this.$router.push('/admins');
     },
     async validatePassword() {
       this.passwordChanged = true;
@@ -129,6 +143,9 @@ export default {
   watch: {
     verifyPassword() {
       this.passwordChanged = true;
+    },
+    async adminId() {
+      await this.loadAdmin();
     },
   },
   async mounted() {
