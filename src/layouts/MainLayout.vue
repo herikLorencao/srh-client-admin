@@ -101,9 +101,9 @@ const linksData = [
     parent: 'Projetos',
   },
   {
-    link: '/projetos/tags',
-    icon: 'fas fa-tags',
-    label: 'Tags',
+    link: '/projetos/itens',
+    icon: 'fas fa-box',
+    label: 'Itens',
     parent: 'Projetos',
   },
   {
@@ -113,9 +113,9 @@ const linksData = [
     parent: 'Projetos',
   },
   {
-    link: '/projetos/itens',
-    icon: 'fas fa-box',
-    label: 'Itens',
+    link: '/projetos/tags',
+    icon: 'fas fa-tags',
+    label: 'Vincular Tags',
     parent: 'Projetos',
   },
   {

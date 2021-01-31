@@ -13,7 +13,7 @@
     <q-dialog v-model="deleteDialogVisible" persistent>
       <q-card class="delete-dialog-card">
         <q-card-section class="row items-center text-dialog">
-          Tem certeza que deseja remover o projeto?
+          Tem certeza que deseja remover a tag?
         </q-card-section>
         <q-card-actions class="btn-actions" align="center">
           <q-btn @click="toggleDeleteDialog" class="btn" text-color="white" label="Cancelar"/>

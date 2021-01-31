@@ -50,6 +50,15 @@ const routes = [
     ],
   },
   {
+    path: '/projetos/itens',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/items/ListItemsByProject') },
+      { path: 'criar', component: () => import('pages/items/CreateItem') },
+      { path: 'editar/:id', component: () => import('pages/items/EditItem') },
+    ],
+  },
+  {
     path: '/projetos/tags',
     component: () => import('layouts/MainLayout.vue'),
     children: [
@@ -61,13 +70,6 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/typeItems/ListTypeItemInProject') },
-    ],
-  },
-  {
-    path: '/projetos/itens',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/items/ListItemsByProject') },
     ],
   },
   {

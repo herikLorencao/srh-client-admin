@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex column items-center">
-    <h1>Listar Projetos</h1>
+    <h1>Seus Projetos</h1>
     <q-table class="table" :columns="columns" :data="projects" row-key="id"
              selection="single" :selected.sync="projectSelected" flat/>
     <div v-show="showActions" class="project-actions-list">
@@ -72,7 +72,12 @@ export default {
       const projectService = new ProjectService();
       const resp = await projectService.list();
       // eslint-disable-next-line dot-notation
-      if (resp && resp['_embedded'].projects) this.projects = resp['_embedded'].projects;
+      if (resp && resp['_embedded'].projects) {
+        // eslint-disable-next-line dot-notation
+        const allProjects = resp['_embedded'].projects;
+        const adminId = this.$store.getters['user/getUserId'];
+        this.projects = allProjects.filter((project) => project.adminId === adminId);
+      }
     },
     editProject() {
       const projectId = this.projectSelected[0].id;

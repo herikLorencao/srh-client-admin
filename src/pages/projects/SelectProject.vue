@@ -59,7 +59,12 @@ export default {
       const projectService = new ProjectService();
       const resp = await projectService.list();
       // eslint-disable-next-line dot-notation
-      if (resp && resp['_embedded'].projects) this.projects = resp['_embedded'].projects;
+      if (resp && resp['_embedded'].projects) {
+        // eslint-disable-next-line dot-notation
+        const allProjects = resp['_embedded'].projects;
+        const adminId = this.$store.getters['user/getUserId'];
+        this.projects = allProjects.filter((project) => project.adminId === adminId);
+      }
     },
     selectProject() {
       const projectId = this.projectSelected[0].id;

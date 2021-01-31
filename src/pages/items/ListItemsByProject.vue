@@ -4,13 +4,30 @@
     <q-table class="table" :columns="columns" :data="items" row-key="id" flat
              selection="single" :selected.sync="itemSelect"/>
     <div class="item-actions flex justify-center">
-      <q-btn class="btn" text-color="white" label="Cadastrar"/>
+      <q-btn @click="createItem" class="btn" text-color="white" label="Cadastrar"/>
+      <q-btn v-show="showActions" @click="editProject" class="btn" text-color="white"
+             label="Editar"/>
+      <q-btn v-show="showActions" @click="toggleDeleteDialog" class="btn" text-color="white"
+             label="Remover"/>
     </div>
+
+    <q-dialog v-model="deleteDialogVisible" persistent>
+      <q-card class="delete-dialog-card">
+        <q-card-section class="row items-center text-dialog">
+          Tem certeza que deseja remover o item?
+        </q-card-section>
+        <q-card-actions class="btn-actions" align="center">
+          <q-btn @click="toggleDeleteDialog" class="btn" text-color="white" label="Cancelar"/>
+          <q-btn @click="deleteItem" class="btn" text-color="white" label="Confirmar"/>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
 <script>
 import ProjectService from 'src/service/ProjectService';
+import ItemService from 'src/service/ItemService';
 
 const columns = [
   {
@@ -41,6 +58,7 @@ export default {
       columns,
       items: [],
       itemSelect: [],
+      deleteDialogVisible: false,
     };
   },
   methods: {
@@ -51,6 +69,23 @@ export default {
 
       // eslint-disable-next-line dot-notation
       if (resp && resp['_embedded'].itens) this.items = resp['_embedded'].itens;
+    },
+    async createItem() {
+      await this.$router.push('/projetos/itens/criar');
+    },
+    toggleDeleteDialog() {
+      this.deleteDialogVisible = !this.deleteDialogVisible;
+    },
+    async editProject() {
+      const itemId = this.itemSelect[0].id;
+      await this.$router.push(`/projetos/itens/editar/${itemId}`);
+    },
+    async deleteItem() {
+      const itemService = new ItemService();
+      const itemId = this.itemSelect[0].id;
+      await itemService.remove(itemId);
+      await this.loadItems();
+      this.toggleDeleteDialog();
     },
   },
   async mounted() {
