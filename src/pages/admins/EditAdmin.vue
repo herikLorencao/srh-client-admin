@@ -1,14 +1,13 @@
 <template>
-  <q-page class="flex column items-center">
-    <h1>Editar Api</h1>
-    <q-form class="form flex column items-center" @submit="editApiSubmit">
-      <q-input class="input" outlined v-model="apiForm.name" label="Nome"/>
-      <q-input class="input" outlined v-model="apiForm.login" label="Login"/>
-      <q-input class="input" outlined v-model="apiForm.email" label="Email"/>
+  <q-page class="flex column flex-center">
+    <h1>Editar Perfil</h1>
+    <q-form class="form flex column items-center" @submit="editAdminSubmit">
+      <q-input class="input" outlined v-model="profileForm.name" label="Nome"/>
+      <q-input class="input" outlined v-model="profileForm.login" label="Login"/>
+      <q-input class="input" outlined v-model="profileForm.email" label="Email"/>
       <div class="flex justify-between items-center toggle-admin">
         <q-btn class="btn-pass" text-color="white" icon="fas fa-key" label="Trocar Senha"
                @click="toggleChangePasswordMenu"/>
-        <q-toggle v-model="apiForm.isAdmin" color="orange" label="Perfil Administrador"/>
       </div>
       <q-btn class="btn" text-color="white" label="Salvar" type="submit"/>
     </q-form>
@@ -21,7 +20,7 @@
         <q-card-section class="password-inputs">
           <q-input class="input" type="password" outlined v-model="oldPassword"
                    label="Senha Antiga"/>
-          <q-input class="input" type="password" outlined v-model="apiForm.password"
+          <q-input class="input" type="password" outlined v-model="profileForm.password"
                    label="Nova Senha"/>
           <q-input class="input" type="password" outlined v-model="verifyPassword"
                    label="Repetir Senha"/>
@@ -39,7 +38,7 @@
           Verificar Senha
         </q-card-section>
         <q-card-section class="password-inputs">
-          <q-input class="input" type="password" outlined v-model="apiForm.password"
+          <q-input class="input" type="password" outlined v-model="profileForm.password"
                    label="Senha"/>
         </q-card-section>
         <q-card-actions class="flex justify-center btn-actions" align="center">
@@ -52,21 +51,20 @@
 </template>
 
 <script>
-import ApiService from 'src/service/ApiService';
 import notify from 'src/helper/notify';
+import AdminService from 'src/service/AdminService';
 
 export default {
-  name: 'EditApi',
+  name: 'EditAdmin',
   data() {
     return {
-      apiForm: {
+      profileForm: {
         id: '',
         name: '',
         login: '',
         email: '',
         password: '',
         oldPassword: null,
-        isAdmin: false,
       },
       verifyPassword: '',
       oldPassword: '',
@@ -76,36 +74,48 @@ export default {
     };
   },
   methods: {
-    async loadApi() {
-      const apiService = new ApiService();
-      const apiId = this.$route.params.id;
-      this.apiForm = await apiService.find(apiId);
+    async loadAdmin() {
+      const adminService = new AdminService();
+      const adminId = this.$store.getters['user/getUserId'];
+      const resp = await adminService.find(adminId);
+      if (resp) this.profileForm = resp;
     },
-    async editApiSubmit() {
-      if (!this.passwordChanged && !this.apiForm.password) {
+    async editAdminSubmit() {
+      if (!this.passwordChanged && !this.profileForm.password) {
         this.toggleVerifyPasswordMenu();
         return;
       }
 
       if (this.oldPassword && this.oldPassword !== '') {
-        this.apiForm.oldPassword = this.oldPassword;
+        this.profileForm.oldPassword = this.oldPassword;
       }
 
-      const apiService = new ApiService();
-      const resp = await apiService.update(this.apiForm);
+      const adminService = new AdminService();
+      const resp = await adminService.update(this.profileForm);
 
-      if (resp) await this.$router.push('/apis');
+      if (resp) await this.$router.push('/');
       this.clearPassword();
+    },
+    async validatePassword() {
+      this.passwordChanged = true;
+      this.toggleVerifyPasswordMenu();
+      await this.editAdminSubmit();
+    },
+    toggleVerifyPasswordMenu() {
+      this.verifyPasswordVisible = !this.verifyPasswordVisible;
+    },
+    toggleChangePasswordMenu() {
+      this.changePasswordVisible = !this.changePasswordVisible;
     },
     clearPassword() {
       this.passwordChanged = false;
-      this.apiForm.password = null;
+      this.profileForm.password = null;
       this.oldPassword = '';
       this.verifyPassword = '';
     },
     confirmChangePassword() {
-      const verifyPasswordConfirm = this.verifyPassword === this.apiForm.password;
-      const validPasswords = this.oldPassword !== '' && this.apiForm.password !== '' && verifyPasswordConfirm;
+      const verifyPasswordConfirm = this.verifyPassword === this.profileForm.password;
+      const validPasswords = this.oldPassword !== '' && this.profileForm.password !== '' && verifyPasswordConfirm;
 
       if (validPasswords) {
         notify('warning', 'Salve o usuário para validar a alteração');
@@ -115,17 +125,6 @@ export default {
 
       notify('negative', 'Valores de senha inválidos');
     },
-    async validatePassword() {
-      this.passwordChanged = true;
-      this.toggleVerifyPasswordMenu();
-      await this.editApiSubmit();
-    },
-    toggleVerifyPasswordMenu() {
-      this.verifyPasswordVisible = !this.verifyPasswordVisible;
-    },
-    toggleChangePasswordMenu() {
-      this.changePasswordVisible = !this.changePasswordVisible;
-    },
   },
   watch: {
     verifyPassword() {
@@ -133,7 +132,7 @@ export default {
     },
   },
   async mounted() {
-    await this.loadApi();
+    await this.loadAdmin();
   },
 };
 </script>

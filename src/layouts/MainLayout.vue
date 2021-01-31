@@ -23,8 +23,10 @@
           />
         </div>
 
-        <q-fab flat square class="user-info" icon="fas fa-user" label="Admin" direction="down"
-               v-model="userMenuActive">
+        <q-fab flat square class="user-info" icon="fas fa-user" :label="username" direction="down"
+               v-model="userMenuActive" vertical-actions-align="right">
+          <q-fab-action @click="editProfile" square class="user-info-action" color="blue-grey-10"
+                        icon="fas fa-user-edit" label="Perfil"/>
           <q-fab-action @click="logout" square class="user-info-action" color="blue-grey-10"
                         icon="fas fa-sign-out-alt" label="Sair"/>
         </q-fab>
@@ -67,7 +69,6 @@
 <script>
 import ItemMenu from 'components/ItemMenu';
 import AuthService from 'src/service/AuthService';
-import AdminService from 'src/service/AdminService';
 
 const linksData = [
   {
@@ -137,6 +138,12 @@ const linksData = [
 export default {
   name: 'MainLayout',
   components: { ItemMenu },
+  computed: {
+    username() {
+      const userData = this.$store.getters['user/getUserInfoData'];
+      return userData && userData.name ? userData.name : 'Carregando ...';
+    },
+  },
   data() {
     return {
       userMenuActive: false,
@@ -175,11 +182,14 @@ export default {
       this.$store.commit('user/removeUserId');
       this.$router.push('/login');
     },
+    editProfile() {
+      const adminId = this.$store.getters['user/getUserId'];
+      this.$router.push(`/admins/${adminId}`);
+    },
   },
   async mounted() {
-    const adminService = new AdminService();
-    const adminInfo = await adminService.find(this.$store.getters['user/getUserId']);
-    this.$store.commit('')
-  }
+    const adminId = this.$store.getters['user/getUserId'];
+    await this.$store.dispatch('user/persistUserInfo', adminId);
+  },
 };
 </script>

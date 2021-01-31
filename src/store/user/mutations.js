@@ -5,3 +5,7 @@ export function saveUserId(state, data) {
 export function removeUserId(state) {
   state.id = null;
 }
+
+export function saveUserInfo(state, data) {
+  state.userInfoData = data;
+}

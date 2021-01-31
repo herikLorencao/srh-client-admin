@@ -14,6 +14,13 @@ const routes = [
     ],
   },
   {
+    path: '/admins/:id',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/admins/EditAdmin') },
+    ],
+  },
+  {
     path: '/projetos',
     component: () => import('layouts/MainLayout.vue'),
     children: [
