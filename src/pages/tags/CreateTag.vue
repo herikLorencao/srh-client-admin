@@ -24,7 +24,7 @@ export default {
     async submitCreateTag() {
       const tagService = new TagService();
       const resp = await tagService.create(this.tagForm);
-      if (resp) this.$router.push(`/tags/editar/${resp.id}`);
+      if (resp) await this.$router.push(`/tags/editar/${resp.id}`);
     },
   },
 };

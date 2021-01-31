@@ -107,15 +107,15 @@ const linksData = [
     parent: 'Projetos',
   },
   {
-    link: '/projetos/tipoitens',
-    icon: 'fas fa-boxes',
-    label: 'Tipos de item',
+    link: '/projetos/tags',
+    icon: 'fas fa-tag',
+    label: 'Tags',
     parent: 'Projetos',
   },
   {
-    link: '/projetos/tags',
-    icon: 'fas fa-tags',
-    label: 'Vincular Tags',
+    link: '/projetos/tipoitens',
+    icon: 'fas fa-boxes',
+    label: 'Tipos de item',
     parent: 'Projetos',
   },
   {

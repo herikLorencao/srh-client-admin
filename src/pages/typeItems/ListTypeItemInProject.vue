@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex column items-center">
-    <h1>Tipos de Item</h1>
+    <h1>Tipos de Item no Projeto</h1>
     <q-table class="table" :columns="columns" :data="typeitens" row-key="id" flat/>
   </q-page>
 </template>

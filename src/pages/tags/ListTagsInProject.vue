@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex column items-center">
-    <h1>Tags</h1>
+    <h1>Tags no Projeto</h1>
     <q-table class="table" :columns="columns" :data="tags" row-key="itemId" flat/>
   </q-page>
 </template>
