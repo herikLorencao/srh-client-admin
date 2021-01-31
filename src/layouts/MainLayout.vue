@@ -134,6 +134,11 @@ const linksData = [
     label: 'Tipos de item',
   },
   {
+    link: '/atributos',
+    icon: 'fas fa-tasks',
+    label: 'Atributos',
+  },
+  {
     link: '/apis',
     icon: 'fas fa-cog',
     label: 'APIs',

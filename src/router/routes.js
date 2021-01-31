@@ -91,6 +91,15 @@ const routes = [
     ],
   },
   {
+    path: '/atributos',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/attributes/ListAttributes') },
+      { path: 'criar', component: () => import('pages/attributes/CreateAttribute') },
+      { path: 'editar/:id', component: () => import('pages/attributes/EditAttribute') },
+    ],
+  },
+  {
     path: '/apis',
     component: () => import('layouts/MainLayout.vue'),
     children: [

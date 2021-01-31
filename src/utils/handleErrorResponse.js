@@ -14,6 +14,10 @@ const translateFields = (field) => {
       return 'situação';
     case 'visible':
       return 'visibilidade';
+    case 'type':
+      return 'tipo';
+    case 'value':
+      return 'valor';
     default:
       return 'indefinido';
   }
