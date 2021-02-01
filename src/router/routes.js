@@ -47,6 +47,7 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/recommendations/ListRecommendations') },
+      { path: 'matrix/:id', component: () => import('pages/recommendations/ListMatrices') },
     ],
   },
   {

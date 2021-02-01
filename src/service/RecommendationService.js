@@ -11,6 +11,10 @@ export default class RecommendationService {
     return this.client.getAll(this.resourceUrl);
   }
 
+  async listByMatrixId(matrixId) {
+    return this.client.getAll(`${this.resourceUrl}/matrices/${matrixId}`);
+  }
+
   async create(recommendationForm) {
     const resp = await this.client.post(this.resourceUrl, recommendationForm);
 
