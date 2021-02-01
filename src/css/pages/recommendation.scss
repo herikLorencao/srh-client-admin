@@ -1,0 +1,75 @@
+.recommendation-actions {
+  margin: 50px 0;
+  width: 100%;
+
+  .btn {
+    width: 15%;
+    background-color: $primary;
+    margin: 0 10px;
+  }
+}
+
+.recommendation-dialog-card {
+  color: $dark;
+  font-size: 1.05rem;
+  padding: 20px 20px;
+  width: 70%;
+
+  .text-dialog {
+    width: 100%;
+    margin-top: 10px;
+    font-size: 1.3rem;
+    font-weight: 300;
+  }
+
+  .form {
+    width: 90%;
+  }
+
+  .recommendation-buttons-actions {
+    width: 80%;
+  }
+
+  .btn {
+    background-color: $primary;
+    width: 45%;
+  }
+
+  .btn-actions {
+    margin-top: 10px;
+  }
+}
+
+.recommendation-matrix-dialog-card {
+  color: $dark;
+  font-size: 1.05rem;
+  padding: 0 20px;
+
+  .text-dialog {
+    width: 100%;
+    margin-top: 20px;
+    font-size: 1.3rem;
+    font-weight: 300;
+  }
+
+  .matrix-fields {
+    width: 100%;
+
+    .form {
+      width: 90%;
+    }
+  }
+
+  .recommendation-buttons-actions {
+    width: 80%;
+  }
+
+  .btn {
+    background-color: $primary;
+    width: 45%;
+  }
+
+  .btn-actions {
+    margin-top: 10px;
+  }
+}

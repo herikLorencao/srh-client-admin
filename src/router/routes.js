@@ -43,6 +43,13 @@ const routes = [
     ],
   },
   {
+    path: '/projetos/recomendacoes',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/recommendations/ListRecommendations') },
+    ],
+  },
+  {
     path: '/projetos/avaliacoes',
     component: () => import('layouts/MainLayout.vue'),
     children: [

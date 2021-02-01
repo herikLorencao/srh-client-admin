@@ -18,6 +18,12 @@ const translateFields = (field) => {
       return 'tipo';
     case 'value':
       return 'valor';
+    case 'passingScore':
+      return 'Nota';
+    case 'offline':
+      return 'Processamento';
+    case 'decimalPrecision':
+      return 'Precisão';
     default:
       return 'indefinido';
   }
