@@ -27,9 +27,9 @@ export default class Client {
     });
   }
 
-  async getAll(resourceUrl) {
+  async getAll(resourceUrl, page = 0) {
     try {
-      const resp = await this.client.get(resourceUrl);
+      const resp = await this.client.get(`${resourceUrl}?page=${page}`);
       return resp.data;
     } catch (e) {
       handleErrorResponse(e.response.data);

@@ -3,7 +3,22 @@
     <h1>Usuários</h1>
 
     <q-table class="table" :columns="columns" :data="users" row-key="id"
-             selection="single" :selected.sync="userSelect" flat/>
+             selection="single" :selected.sync="userSelect" hide-pagination flat/>
+    <q-pagination
+      @input="loadUsers"
+      v-model="pagination.page"
+      color="grey-9"
+      :max="pagination.pageNumber"
+      :max-pages="5"
+      :direction-links="true"
+      :boundary-links="true"
+      icon-first="skip_previous"
+      icon-last="skip_next"
+      icon-prev="fast_rewind"
+      icon-next="fast_forward"
+      size="md"
+      class="pagination"
+    />
 
     <div v-show="showActions" class="project-actions-list">
       <q-btn @click="openRatingsUser" class="btn" text-color="white" label="Visualizar Avaliações"/>
@@ -75,13 +90,21 @@ export default {
       userSelect: [],
       users: [],
       deleteDialogVisible: false,
+      pagination: {
+        page: 1,
+        pageNumber: 1,
+      },
     };
   },
   methods: {
-    async loadUsers() {
+    async loadUsers(page = 1) {
+      const apiPage = page - 1;
       const projectId = this.$store.getters['navigationInfo/getProjectId'];
       const projectService = new ProjectService();
-      const resp = await projectService.listEvaluators(projectId);
+      const resp = await projectService.listEvaluators(projectId, apiPage);
+
+      if (resp && resp.page) this.pagination.pageNumber = resp.page.totalPages;
+
       // eslint-disable-next-line dot-notation
       if (resp && resp['_embedded'].evaluators) this.users = resp['_embedded'].evaluators;
     },

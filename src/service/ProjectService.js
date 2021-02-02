@@ -38,8 +38,8 @@ export default class ProjectService {
     if (resp) notify('positive', 'Projeto removido com sucesso');
   }
 
-  async listEvaluators(projectId) {
-    return this.client.getAll(`${this.resourceUrl}/${projectId}/evaluators`);
+  async listEvaluators(projectId, page) {
+    return this.client.getAll(`${this.resourceUrl}/${projectId}/evaluators`, page);
   }
 
   async removeEvaluatorInProject(projectId, evaluatorId) {
