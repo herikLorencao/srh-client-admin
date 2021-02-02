@@ -8,3 +8,38 @@
     margin: 0 10px;
   }
 }
+
+.typeitem-attribute {
+  width: 100%;
+  margin-bottom: 10px;
+
+  .btn {
+    width: 40%;
+  }
+}
+
+.typeitem-attribute-dialog-card {
+  width: 100%;
+
+  .text-dialog {
+    margin-top: 10px;
+    font-size: 1.4rem;
+    font-weight: 300;
+  }
+
+  .table-attributes {
+    width: 100%;
+  }
+
+  .actions {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    .btn {
+      width: 25%;
+      background-color: $primary;
+      margin: 0 10px;
+    }
+  }
+}

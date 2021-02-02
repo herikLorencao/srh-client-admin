@@ -42,4 +42,34 @@ export default class TypeItemService {
     const resp = await this.client.delete(this.resourceUrl, id);
     if (resp) notify('positive', 'Tipo Item removido com sucesso');
   }
+
+  async findAttributeInTypeItem(typeItemId, attributeId) {
+    return this.client
+      .getWithoutError(`${this.resourceUrl}/${typeItemId}/attributes`, attributeId);
+  }
+
+  async addAttribute(attribute, typeItemId) {
+    const attributeForm = {
+      attributeId: attribute.id,
+      typeItemId,
+    };
+
+    const resp = await this.client
+      .postWithoutError(`${this.resourceUrl}/${typeItemId}/attributes`,
+        attributeForm);
+
+    if (resp) {
+      notify('positive', 'Atributo adicionado com sucesso');
+    }
+  }
+
+  async removeAttribute(attributeId, typeItemId) {
+    const resp = await this.client
+      .delete(`${this.resourceUrl}/${typeItemId}/attributes`, attributeId);
+    if (resp) notify('positive', 'Atributo removido com sucesso');
+  }
+
+  async loadAttributes(typeItemId) {
+    return this.client.getAll(`${this.resourceUrl}/${typeItemId}/attributes`);
+  }
 }

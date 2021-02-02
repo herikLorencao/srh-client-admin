@@ -2,8 +2,8 @@
   <q-page class="flex column items-center">
     <h1>Criar Tipo Item</h1>
     <q-form class="form flex column items-center" @submit="submitCreateTypeItem">
-      <q-input class="input" outlined v-model="typeItemForm.name" label="Nome" />
-      <q-btn class="btn" text-color="white" label="Salvar" type="submit" />
+      <q-input class="input" outlined v-model="typeItemForm.name" label="Nome"/>
+      <q-btn class="btn" text-color="white" label="Salvar" type="submit"/>
     </q-form>
   </q-page>
 </template>

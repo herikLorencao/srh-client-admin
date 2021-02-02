@@ -57,6 +57,24 @@ export default class Client {
     }
   }
 
+  async getWithoutError(resourceUrl, id) {
+    try {
+      const resp = await this.client.get(`${resourceUrl}/${id}`);
+      return resp.data;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async postWithoutError(resourceUrl, resource) {
+    try {
+      const resp = await this.client.post(resourceUrl, resource);
+      return resp.data;
+    } catch (e) {
+      return null;
+    }
+  }
+
   async put(resourceUrl, id, resource) {
     try {
       const resp = await this.client.put(`${resourceUrl}/${id}`, resource);
