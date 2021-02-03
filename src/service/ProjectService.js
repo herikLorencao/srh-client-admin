@@ -7,8 +7,8 @@ export default class ProjectService {
     this.resourceUrl = '/projects';
   }
 
-  async list() {
-    return this.client.getAll(this.resourceUrl);
+  async list(page) {
+    return this.client.getAll(this.resourceUrl, page);
   }
 
   async find(id) {
@@ -48,7 +48,7 @@ export default class ProjectService {
     if (resp) notify('positive', 'Usuário removido do projeto com sucesso');
   }
 
-  async listItens(projectId) {
-    return this.client.getAll(`${this.resourceUrl}/${projectId}/itens`);
+  async listItens(projectId, page) {
+    return this.client.getAll(`${this.resourceUrl}/${projectId}/itens`, page);
   }
 }

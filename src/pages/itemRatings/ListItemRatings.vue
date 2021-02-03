@@ -2,6 +2,21 @@
   <q-page class="flex column items-center">
     <h1>Avaliações</h1>
     <q-table class="table" :columns="columns" :data="ratings" row-key="itemId" flat/>
+    <q-pagination
+      @input="loadItemRatings"
+      v-model="pagination.page"
+      color="grey-9"
+      :max="pagination.pageNumber"
+      :max-pages="5"
+      :direction-links="true"
+      :boundary-links="true"
+      icon-first="skip_previous"
+      icon-last="skip_next"
+      icon-prev="fast_rewind"
+      icon-next="fast_forward"
+      size="md"
+      class="pagination"
+    />
   </q-page>
 </template>
 
@@ -56,12 +71,18 @@ export default {
     return {
       columns,
       ratings: [],
+      pagination: {
+        page: 1,
+        pageNumber: 1,
+      },
     };
   },
   methods: {
-    async loadItemRatings() {
+    async loadItemRatings(page = 1) {
+      const apiPage = page - 1;
       const itemRatingService = new ItemRatingService();
-      const resp = await itemRatingService.listByProject(this.$store.getters['navigationInfo/getProjectId']);
+      const resp = await itemRatingService.listByProject(this.$store.getters['navigationInfo/getProjectId'], apiPage);
+      if (resp && resp.totalPages) this.pagination.pageNumber = resp.totalPages;
 
       if (resp.content) {
         const promises = resp.content.map(async (itemRating) => {

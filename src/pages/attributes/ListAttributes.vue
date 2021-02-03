@@ -3,6 +3,21 @@
     <h1>Atributos</h1>
     <q-table class="table" :columns="columns" :data="attributes" row-key="id"
              selection="single" :selected.sync="attributeSelect" flat/>
+    <q-pagination
+      @input="loadAttributes"
+      v-model="pagination.page"
+      color="grey-9"
+      :max="pagination.pageNumber"
+      :max-pages="5"
+      :direction-links="true"
+      :boundary-links="true"
+      icon-first="skip_previous"
+      icon-last="skip_next"
+      icon-prev="fast_rewind"
+      icon-next="fast_forward"
+      size="md"
+      class="pagination"
+    />
     <div class="tags-actions flex justify-center">
       <q-btn @click="createAttribute" class="btn" text-color="white" label="Cadastrar"/>
       <q-btn v-show="showActions" @click="editAttribute" class="btn" text-color="white"
@@ -86,12 +101,18 @@ export default {
       attributes: [],
       attributeSelect: [],
       deleteDialogVisible: false,
+      pagination: {
+        page: 1,
+        pageNumber: 1,
+      },
     };
   },
   methods: {
-    async loadAttributes() {
+    async loadAttributes(page = 1) {
+      const apiPage = page - 1;
       const attributeService = new AttributeService();
-      const resp = await attributeService.list();
+      const resp = await attributeService.list(apiPage);
+      if (resp && resp.page) this.pagination.pageNumber = resp.page.totalPages;
       // eslint-disable-next-line dot-notation
       if (resp && resp['_embedded'].attributes) this.attributes = resp['_embedded'].attributes;
     },

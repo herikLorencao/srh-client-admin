@@ -6,8 +6,8 @@ export default class ItemRatingService {
     this.resourceUrl = '/itemratings';
   }
 
-  async listByProject(projectId) {
-    return this.client.getAll(`${this.resourceUrl}/projects/${projectId}`);
+  async listByProject(projectId, page) {
+    return this.client.getAll(`${this.resourceUrl}/projects/${projectId}`, page);
   }
 
   async listByEvaluator(evaluatorId) {

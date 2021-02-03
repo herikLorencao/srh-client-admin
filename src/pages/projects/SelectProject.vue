@@ -3,6 +3,21 @@
     <h1>Selecionar Projeto</h1>
     <q-table class="table" :columns="columns" :data="projects" row-key="id"
              selection="single" :selected.sync="projectSelected" flat/>
+    <q-pagination
+      @input="loadProjects"
+      v-model="pagination.page"
+      color="grey-9"
+      :max="pagination.pageNumber"
+      :max-pages="5"
+      :direction-links="true"
+      :boundary-links="true"
+      icon-first="skip_previous"
+      icon-last="skip_next"
+      icon-prev="fast_rewind"
+      icon-next="fast_forward"
+      size="md"
+      class="pagination"
+    />
     <div v-show="showActions" class="project-actions-list">
       <q-btn @click="selectProject" class="btn" text-color="white" label="Selecionar"/>
     </div>
@@ -52,12 +67,18 @@ export default {
       columns,
       projectSelected: [],
       projects: [],
+      pagination: {
+        page: 1,
+        pageNumber: 1,
+      },
     };
   },
   methods: {
-    async loadProjects() {
+    async loadProjects(page = 1) {
+      const apiPage = page - 1;
       const projectService = new ProjectService();
-      const resp = await projectService.list();
+      const resp = await projectService.list(apiPage);
+      if (resp && resp.page) this.pagination.pageNumber = resp.page.totalPages;
       // eslint-disable-next-line dot-notation
       if (resp && resp['_embedded'].projects) {
         // eslint-disable-next-line dot-notation

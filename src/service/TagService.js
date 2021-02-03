@@ -7,12 +7,12 @@ export default class TagService {
     this.resourceUrl = '/tags';
   }
 
-  async list() {
-    return this.client.getAll(this.resourceUrl);
+  async list(page) {
+    return this.client.getAll(this.resourceUrl, page);
   }
 
-  async listByProject(projectId) {
-    return this.client.get(`${this.resourceUrl}/projects`, projectId);
+  async listByProject(projectId, page) {
+    return this.client.getAll(`${this.resourceUrl}/projects/${projectId}`, page);
   }
 
   async create(tagForm) {

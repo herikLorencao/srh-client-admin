@@ -21,8 +21,8 @@ export default class AdminService {
     return resp;
   }
 
-  async list() {
-    return this.client.getAll(this.resourceUrl);
+  async list(page) {
+    return this.client.getAll(this.resourceUrl, page);
   }
 
   async update(adminForm, isRemovedVerify = false) {

@@ -3,6 +3,21 @@
     <h1>Itens</h1>
     <q-table class="table" :columns="columns" :data="items" row-key="id" flat
              selection="single" :selected.sync="itemSelect"/>
+    <q-pagination
+      @input="loadItems"
+      v-model="pagination.page"
+      color="grey-9"
+      :max="pagination.pageNumber"
+      :max-pages="5"
+      :direction-links="true"
+      :boundary-links="true"
+      icon-first="skip_previous"
+      icon-last="skip_next"
+      icon-prev="fast_rewind"
+      icon-next="fast_forward"
+      size="md"
+      class="pagination"
+    />
     <div class="item-actions flex justify-center">
       <q-btn @click="createItem" class="btn" text-color="white" label="Cadastrar"/>
       <q-btn v-show="showActions" @click="editProject" class="btn" text-color="white"
@@ -59,13 +74,19 @@ export default {
       items: [],
       itemSelect: [],
       deleteDialogVisible: false,
+      pagination: {
+        page: 1,
+        pageNumber: 1,
+      },
     };
   },
   methods: {
-    async loadItems() {
+    async loadItems(page = 1) {
+      const apiPage = page - 1;
       const projectService = new ProjectService();
       const projectId = this.$store.getters['navigationInfo/getProjectId'];
-      const resp = await projectService.listItens(projectId);
+      const resp = await projectService.listItens(projectId, apiPage);
+      if (resp && resp.page) this.pagination.pageNumber = resp.page.totalPages;
 
       // eslint-disable-next-line dot-notation
       if (resp && resp['_embedded'].itens) this.items = resp['_embedded'].itens;

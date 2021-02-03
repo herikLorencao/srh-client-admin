@@ -3,6 +3,21 @@
     <h1>APIs</h1>
     <q-table class="table" :columns="columns" :data="apis" row-key="id"
              selection="single" :selected.sync="apiSelect" flat/>
+    <q-pagination
+      @input="loadApis"
+      v-model="pagination.page"
+      color="grey-9"
+      :max="pagination.pageNumber"
+      :max-pages="5"
+      :direction-links="true"
+      :boundary-links="true"
+      icon-first="skip_previous"
+      icon-last="skip_next"
+      icon-prev="fast_rewind"
+      icon-next="fast_forward"
+      size="md"
+      class="pagination"
+    />
     <div class="api-actions flex justify-center">
       <q-btn @click="createApi" class="btn" text-color="white" label="Cadastrar"/>
       <q-btn v-show="showActions" @click="editApi" class="btn" text-color="white"
@@ -84,12 +99,18 @@ export default {
       apiSelect: [],
       deleteDialogVisible: false,
       verifyPassword: '',
+      pagination: {
+        page: 1,
+        pageNumber: 1,
+      },
     };
   },
   methods: {
-    async loadApis() {
+    async loadApis(page = 1) {
+      const apiPage = page - 1;
       const apiService = new ApiService();
-      const resp = await apiService.list();
+      const resp = await apiService.list(apiPage);
+      if (resp && resp.page) this.pagination.pageNumber = resp.page.totalPages;
 
       // eslint-disable-next-line dot-notation
       if (resp && resp['_embedded'].apiUsers) this.apis = resp['_embedded'].apiUsers;

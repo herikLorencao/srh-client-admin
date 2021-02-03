@@ -7,8 +7,8 @@ export default class ApiService {
     this.resourceUrl = '/users/apis';
   }
 
-  async list() {
-    return this.client.getAll(this.resourceUrl);
+  async list(page) {
+    return this.client.getAll(this.resourceUrl, page);
   }
 
   async find(id) {

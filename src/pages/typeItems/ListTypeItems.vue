@@ -3,6 +3,21 @@
     <h1>Tipos de Item</h1>
     <q-table class="table" :columns="columns" :data="typeitens" row-key="id"
              selection="single" :selected.sync="typeItemSelect" flat/>
+    <q-pagination
+      @input="loadTypeItens"
+      v-model="pagination.page"
+      color="grey-9"
+      :max="pagination.pageNumber"
+      :max-pages="5"
+      :direction-links="true"
+      :boundary-links="true"
+      icon-first="skip_previous"
+      icon-last="skip_next"
+      icon-prev="fast_rewind"
+      icon-next="fast_forward"
+      size="md"
+      class="pagination"
+    />
     <div class="typeitens-actions flex justify-center">
       <q-btn @click="createTypeItens" class="btn" text-color="white" label="Cadastrar"/>
       <q-btn v-show="showActions" @click="editTypeItens" class="btn" text-color="white"
@@ -58,13 +73,18 @@ export default {
       typeitens: [],
       typeItemSelect: [],
       deleteDialogVisible: false,
+      pagination: {
+        page: 1,
+        pageNumber: 1,
+      },
     };
   },
   methods: {
-    async loadTypeItens() {
+    async loadTypeItens(page = 1) {
+      const apiPage = page - 1;
       const typeItemService = new TypeItemService();
-      const resp = await typeItemService.list();
-
+      const resp = await typeItemService.list(apiPage);
+      if (resp && resp.page) this.pagination.pageNumber = resp.page.totalPages;
       // eslint-disable-next-line dot-notation
       if (resp && resp['_embedded'].typeitems) this.typeitens = resp['_embedded'].typeitems;
     },

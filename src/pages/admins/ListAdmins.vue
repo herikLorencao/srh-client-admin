@@ -3,6 +3,21 @@
     <h1>Administradores</h1>
     <q-table class="table" :columns="columns" :data="admins" row-key="id"
              selection="single" :selected.sync="adminSelect" flat/>
+    <q-pagination
+      @input="loadAdmins"
+      v-model="pagination.page"
+      color="grey-9"
+      :max="pagination.pageNumber"
+      :max-pages="5"
+      :direction-links="true"
+      :boundary-links="true"
+      icon-first="skip_previous"
+      icon-last="skip_next"
+      icon-prev="fast_rewind"
+      icon-next="fast_forward"
+      size="md"
+      class="pagination"
+    />
     <div class="api-actions flex justify-center">
       <q-btn @click="createAdmin" class="btn" text-color="white" label="Cadastrar"/>
       <q-btn v-show="showActions" @click="editAdmin" class="btn" text-color="white"
@@ -77,12 +92,18 @@ export default {
       adminSelect: [],
       deleteDialogVisible: false,
       verifyPassword: '',
+      pagination: {
+        page: 1,
+        pageNumber: 1,
+      },
     };
   },
   methods: {
-    async loadApis() {
+    async loadAdmins(page = 1) {
+      const apiPage = page - 1;
       const adminService = new AdminService();
-      const resp = await adminService.list();
+      const resp = await adminService.list(apiPage);
+      if (resp && resp.page) this.pagination.pageNumber = resp.page.totalPages;
 
       // eslint-disable-next-line dot-notation
       if (resp && resp['_embedded'].admins) this.admins = resp['_embedded'].admins;
@@ -115,12 +136,12 @@ export default {
         this.verifyPassword = '';
       }
 
-      await this.loadApis();
+      await this.loadAdmins();
       this.toggleDeleteDialog();
     },
   },
   async mounted() {
-    await this.loadApis();
+    await this.loadAdmins();
   },
 };
 </script>

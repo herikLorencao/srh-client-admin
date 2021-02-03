@@ -7,8 +7,8 @@ export default class RecommendationService {
     this.resourceUrl = '/recommendations';
   }
 
-  async list() {
-    return this.client.getAll(this.resourceUrl);
+  async list(page) {
+    return this.client.getAll(this.resourceUrl, page);
   }
 
   async listByMatrixId(matrixId) {

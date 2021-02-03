@@ -11,8 +11,8 @@ export default class AttributeService {
     return this.client.get(this.resourceUrl, id);
   }
 
-  async list() {
-    return this.client.getAll(this.resourceUrl);
+  async list(page) {
+    return this.client.getAll(this.resourceUrl, page);
   }
 
   async create(attributeForm) {
