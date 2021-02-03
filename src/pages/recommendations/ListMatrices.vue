@@ -2,6 +2,21 @@
   <q-page class="flex column items-center">
     <h1>Matrix de Recomendação</h1>
     <q-table class="table" :columns="columns" :data="recommendations" row-key="id" flat/>
+    <q-pagination
+      @input="loadRecommendations"
+      v-model="pagination.page"
+      color="grey-9"
+      :max="pagination.pageNumber"
+      :max-pages="5"
+      :direction-links="true"
+      :boundary-links="true"
+      icon-first="skip_previous"
+      icon-last="skip_next"
+      icon-prev="fast_rewind"
+      icon-next="fast_forward"
+      size="md"
+      class="pagination"
+    />
   </q-page>
 </template>
 
@@ -67,13 +82,19 @@ export default {
     return {
       columns,
       recommendations: [],
+      pagination: {
+        page: 1,
+        pageNumber: 1,
+      },
     };
   },
   methods: {
-    async loadRecommendations() {
+    async loadRecommendations(page = 1) {
+      const apiPage = page - 1;
       const recommendationService = new RecommendationService();
       const matrixId = this.$route.params.id;
-      const resp = await recommendationService.listByMatrixId(matrixId);
+      const resp = await recommendationService.listByMatrixId(matrixId, apiPage);
+      if (resp && resp.totalPages) this.pagination.pageNumber = resp.totalPages;
       if (resp && resp.content) {
         this.recommendations = resp.content;
       }

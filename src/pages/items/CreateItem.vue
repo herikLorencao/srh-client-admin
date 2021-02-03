@@ -9,6 +9,21 @@
         <span class="table-title">Escolher Tipo de Item (opcional)</span>
         <q-table class="table" :columns="columns" :data="typeItens" row-key="id"
                  selection="single" :selected.sync="typeItemSelect" flat/>
+        <q-pagination
+          @input="loadTypeItens"
+          v-model="pagination.page"
+          color="grey-9"
+          :max="pagination.pageNumber"
+          :max-pages="5"
+          :direction-links="true"
+          :boundary-links="true"
+          icon-first="skip_previous"
+          icon-last="skip_next"
+          icon-prev="fast_rewind"
+          icon-next="fast_forward"
+          size="md"
+          class="pagination"
+        />
       </div>
       <q-btn class="btn" text-color="white" label="Salvar" type="submit"/>
     </q-form>
@@ -47,12 +62,18 @@ export default {
       },
       typeItens: [],
       typeItemSelect: [],
+      pagination: {
+        page: 1,
+        pageNumber: 1,
+      },
     };
   },
   methods: {
-    async loadTypeItens() {
+    async loadTypeItens(page = 1) {
+      const apiPage = page - 1;
       const typeItemService = new TypeItemService();
-      const resp = await typeItemService.list();
+      const resp = await typeItemService.list(apiPage);
+      if (resp && resp.page) this.pagination.pageNumber = resp.page.totalPages;
       // eslint-disable-next-line dot-notation
       if (resp && resp['_embedded'].typeitems) this.typeItens = resp['_embedded'].typeitems;
     },

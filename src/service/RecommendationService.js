@@ -11,8 +11,8 @@ export default class RecommendationService {
     return this.client.getAll(this.resourceUrl, page);
   }
 
-  async listByMatrixId(matrixId) {
-    return this.client.getAll(`${this.resourceUrl}/matrices/${matrixId}`);
+  async listByMatrixId(matrixId, page) {
+    return this.client.getAll(`${this.resourceUrl}/matrices/${matrixId}`, page);
   }
 
   async create(recommendationForm) {
