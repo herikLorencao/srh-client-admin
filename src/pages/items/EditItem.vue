@@ -115,7 +115,7 @@ export default {
       const resp = await tagService.list(apiPage);
       if (resp && resp.page) this.paginationTags.pageNumber = resp.page.totalPages;
       // eslint-disable-next-line dot-notation
-      if (resp && resp['_embedded'].tags) this.tags = resp['_embedded'].tags;
+      if (resp && resp['_embedded'] && resp['_embedded'].tags) this.tags = resp['_embedded'].tags;
     },
     async loadTypeItens(page = 1) {
       const apiPage = page - 1;
@@ -123,7 +123,7 @@ export default {
       const resp = await typeItemService.list(apiPage);
       if (resp && resp.page) this.paginationTypeItem.pageNumber = resp.page.totalPages;
       // eslint-disable-next-line dot-notation
-      if (resp && resp['_embedded'].typeitems) this.typeItens = resp['_embedded'].typeitems;
+      if (resp && resp['_embedded'] && resp['_embedded'].typeitems) this.typeItens = resp['_embedded'].typeitems;
     },
     async submitEditItem() {
       const itemService = new ItemService();
