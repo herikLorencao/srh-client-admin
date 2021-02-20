@@ -18,7 +18,8 @@
             </template>
           </q-input>
           <q-btn class="login-btn" text-color="white" label="Entrar" type="submit" />
-          <router-link class="forget-password" to="/recuperarsenha">Esqueceu a Senha?</router-link>
+          <!-- <router-link class="forget-password" to="/recuperarsenha">E
+          squeceu a Senha?</router-link> -->
         </q-form>
       </q-card-section>
     </q-card>
