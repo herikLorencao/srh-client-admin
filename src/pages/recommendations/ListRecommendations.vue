@@ -171,13 +171,6 @@ const columns = [
     sortable: true,
   },
   {
-    name: 'runtimeInMiliSeconds',
-    field: 'runtimeInMiliSeconds',
-    label: 'Tempo(s)',
-    align: 'center',
-    sortable: true,
-  },
-  {
     name: 'algorithmId',
     field: 'algorithmId',
     label: 'Algoritmo',
