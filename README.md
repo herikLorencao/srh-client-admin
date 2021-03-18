@@ -21,7 +21,7 @@ Para uso do sistema basta clonar esse repositório com o seguinte comando:
 git clone git@github.com:herikLorencao/srh-client-admin.git
 ```
 
-Após esse passo é necessário a instalação das dependências, para isso é necessário que as seguintes dependências estejam instaladas em sua máquina:
+Após esse passo é necessário a instalação das dependências, para isso é necessário que as seguintes ferramentas estejam instaladas em sua máquina:
 
 - [Node JS](https://nodejs.org/pt-br/)
 - [Yarn](https://yarnpkg.com/)
